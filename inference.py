@@ -7,7 +7,7 @@ from vllm import LLM, SamplingParams
 FLAGS = flags.FLAGS
 
 def add_options():
-  flags.DEFINE_string('model', default = None, help = 'model name')
+  flags.DEFINE_string('model', default = 'meta-llama/Llama-2-7b-hf', help = 'model name')
   flags.DEFINE_string('prompt', default = None, help = 'path to file containing prompts. line break is replaced by \\n')
   flags.DFEINE_float('top_p', default = 1, help = 'top-p')
   flags.DEFINE_float('top_k', default = -1, help = 'top-k')
