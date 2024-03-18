@@ -2,6 +2,7 @@
 
 import json
 from absl import app, flags
+from huggingface_hub import login
 from vllm import LLM, SamplingParams
 
 FLAGS = flags.FLAGS
@@ -15,6 +16,7 @@ def add_options():
   flags.DEFINE_string('output', default = 'outputs.json', help = 'path to output file')
 
 def main(unused_argv):
+  login(token = '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')
   prompts = list()
   with open(FLAGS.prompt, 'r') as f:
     for line in f.readlines():
