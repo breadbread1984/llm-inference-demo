@@ -13,7 +13,7 @@ def add_options():
   flags.DEFINE_string('prompt', default = None, help = 'path to file containing prompts, line break is replaced by \\n')
   flags.DEFINE_float('top_p', default = 1, help = 'top-p')
   flags.DEFINE_float('top_k', default = -1, help = 'top-k')
-  flags.DEFINE_float('temperature', default = 0, help = 'temperature or greedy sampling if set 0')
+  flags.DEFINE_float('temperature', default = 1, help = 'temperature')
   flags.DEFINE_string('output', default = 'outputs.json', help = 'path to output file')
 
 def main(unused_argv):
