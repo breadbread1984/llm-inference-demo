@@ -9,7 +9,7 @@ from langchain_core.output_parsers import StrOutputParser
 FLAGS = flags.FLAGS
 
 def add_options():
-  flags.DEFINE_string('model', default = 'meta-llama/Llama-2-7b-hf', help = 'model name')
+  flags.DEFINE_string('model', default = 'google/gemma-7b', help = 'model name')
   flags.DEFINE_string('prompt', default = None, help = 'path to file containing prompts, line break is replaced by \\n')
   flags.DEFINE_string('output', default = 'output.json', help = 'path to output file')
 
