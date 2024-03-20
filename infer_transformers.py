@@ -24,6 +24,7 @@ def main(unused_argv):
     for line in f.readlines():
       prompts.append(line.replace('\\n','\n'))
   tokenizer = AutoTokenizer.from_pretrained(FLAGS.model)
+  tokenizer.padding_side = 'left'
   llm = AutoModelForCausalLM.from_pretrained(FLAGS.model)
   logits_processor = LogitsProcessorList()
   logits_processor.append(TemperatureLogitsWarper(FLAGS.temperature))
@@ -31,7 +32,7 @@ def main(unused_argv):
     logits_processor.append(TopPLogitsWarper(FLAGS.top_p))
   elif FLAGS.top_k != -1:
     logits_processor.append(TopKLogitsWarper(FLAGS.top_k))
-  inputs = tokenizer(prompts, return_tensors = 'pt', padding_side = 'left')
+  inputs = tokenizer(prompts, return_tensors = 'pt')
   kvcache = None
   outputs = llm.generate(**inputs, logits_processor_list = logits_processor, do_sample = FLAGS.sample, use_cache = True, past_key_values = kvcache, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
   kvcache = outputs.past_key_values
