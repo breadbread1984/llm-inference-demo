@@ -28,7 +28,7 @@ def main(unused_argv):
   logits_processor.append(TemperatureLogitsWarper(FLAGS.temperature))
   if FLAGS.top_p != 1:
     logits_processor.append(TopPLogitsWarper(FLAGS.top_p))
-  else:
+  elif FLAGS.top_k != -1:
     logits_processor.append(TopKLogitsWarper(FLAGS.top_k))
   inputs = tokenizer(prompts, return_tensors = 'pt', padding_side = 'left')
   kvcache = None
