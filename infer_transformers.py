@@ -17,6 +17,7 @@ def add_options():
   flags.DEFINE_float('temperature', default = 1, help = 'temperature')
   flags.DEFINE_boolean('sample', default = False, help = 'whether to sample output')
   flags.DEFINE_string('output', default = 'outputs.json', help = 'path to output file')
+  flags.DEFINE_integer('max_length', default = None, help = 'max length to generate')
   flags.DEFINE_enum('device', default = 'cuda', enum_values = {'cuda', 'cpu'}, help = 'device to use')
 
 def main(unused_argv):
@@ -39,7 +40,7 @@ def main(unused_argv):
   inputs = tokenizer(prompts, return_tensors = 'pt', padding = True)
   inputs = inputs.to(device(FLAGS.device))
   kvcache = None
-  outputs = llm.generate(**inputs, logits_processor = logits_processor, do_sample = FLAGS.sample, use_cache = True, past_key_values = kvcache, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
+  outputs = llm.generate(**inputs, logits_processor = logits_processor, do_sample = FLAGS.sample, use_cache = True, past_key_values = kvcache, max_length = FLAGS.max_length, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
   kvcache = outputs.past_key_values
   input_ids = outputs.sequences
   outputs = tokenizer.batch_decode(input_ids, skip_special_tokens = True)
