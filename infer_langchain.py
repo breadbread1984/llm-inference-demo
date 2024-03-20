@@ -23,7 +23,7 @@ def main(unused_argv):
   outputs = list()
   with open(FLAGS.prompt, 'r') as f:
     for line in f.readlines():
-      output = chain.invoke(line)
+      output = chain.invoke({"prompt":line})
       outputs.append(output)
   with open(FLAGS.output, 'w') as f:
     f.write(json.dumps(outputs))
