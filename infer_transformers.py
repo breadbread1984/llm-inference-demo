@@ -32,7 +32,7 @@ def main(unused_argv):
     logits_processor.append(TopPLogitsWarper(FLAGS.top_p))
   elif FLAGS.top_k != -1:
     logits_processor.append(TopKLogitsWarper(FLAGS.top_k))
-  inputs = tokenizer(prompts, return_tensors = 'pt')
+  inputs = tokenizer(prompts, return_tensors = 'pt', padding = True)
   kvcache = None
   outputs = llm.generate(**inputs, logits_processor_list = logits_processor, do_sample = FLAGS.sample, use_cache = True, past_key_values = kvcache, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
   kvcache = outputs.past_key_values
