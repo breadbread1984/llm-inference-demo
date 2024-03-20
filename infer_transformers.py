@@ -43,7 +43,7 @@ def main(unused_argv):
   kvcache = outputs.past_key_values
   input_ids = outputs.sequences
   outputs = tokenizer.batch_decode(input_ids, skip_special_tokens = True)
-  with open(FLAGS.input, 'w') as f:
+  with open(FLAGS.output, 'w') as f:
     f.write(json.dumps(outputs))
 
 if __name__ == "__main__":
