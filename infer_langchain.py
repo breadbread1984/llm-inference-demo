@@ -17,7 +17,7 @@ def main(unused_argv):
   llm = HuggingFaceEndpoint(endpoint_url = "https://api-inference.huggingface.co/models/" + FLAGS.model,
                             huggingfacehub_api_token = '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',
                             task = 'text-generation')
-  prompt = = PromptTemplate.from_template("{prompt}")
+  prompt = PromptTemplate.from_template("{prompt}")
   output_parser = StrOutputParser()
   chain = prompt | llm | output_parser
   outputs = list()
