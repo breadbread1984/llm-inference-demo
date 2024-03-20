@@ -14,6 +14,7 @@ def add_options():
   flags.DEFINE_float('top_p', default = 1, help = 'top-p')
   flags.DEFINE_float('top_k', default = -1, help = 'top-k')
   flags.DEFINE_float('temperature', default = 1, help = 'temperature')
+  flags.DEFINE_boolean('sample', default = False, help = 'whether to sample output')
   flags.DEFINE_string('output', default = 'outputs.json', help = 'path to output file')
 
 def main(unused_argv):
@@ -32,7 +33,7 @@ def main(unused_argv):
     logits_processor.append(TopKLogitsWarper(FLAGS.top_k))
   inputs = tokenizer(prompts, return_tensors = 'pt', padding_side = 'left')
   kvcache = None
-  outputs = llm.generate(**inputs, logits_processor_list = logits_processor, do_sample = True, use_cache = True, past_key_values = kvcache, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
+  outputs = llm.generate(**inputs, logits_processor_list = logits_processor, do_sample = FLAGS.sample, use_cache = True, past_key_values = kvcache, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
   kvcache = outputs.past_key_values
   input_ids = outputs.sequences
   outputs = tokenizer.batch_decode(input_ids, skip_special_tokens = True)
