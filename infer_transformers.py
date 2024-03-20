@@ -3,6 +3,7 @@
 import json
 from absl import app, flags
 from huggingface_hub import login
+from torch import device
 from transformers import AutoTokenizer, AutoModelForCausalLM, LogitsProcessorList, \
         TemperatureLogitsWarper, TopKLogitsWarper, TopPLogitsWarper
 
@@ -16,6 +17,7 @@ def add_options():
   flags.DEFINE_float('temperature', default = 1, help = 'temperature')
   flags.DEFINE_boolean('sample', default = False, help = 'whether to sample output')
   flags.DEFINE_string('output', default = 'outputs.json', help = 'path to output file')
+  flags.DEFINE_enum('device', default = 'cuda', enum_values = {'cuda', 'cpu'}, help = 'device to use')
 
 def main(unused_argv):
   login(token = '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')
@@ -27,6 +29,7 @@ def main(unused_argv):
   tokenizer.padding_side = 'left'
   tokenizer.pad_token = tokenizer.eos_token
   llm = AutoModelForCausalLM.from_pretrained(FLAGS.model)
+  llm = llm.to(device(FLAGS.device))
   logits_processor = LogitsProcessorList()
   logits_processor.append(TemperatureLogitsWarper(FLAGS.temperature))
   if FLAGS.top_p != 1:
@@ -34,6 +37,7 @@ def main(unused_argv):
   elif FLAGS.top_k != -1:
     logits_processor.append(TopKLogitsWarper(FLAGS.top_k))
   inputs = tokenizer(prompts, return_tensors = 'pt', padding = True)
+  inputs = inputs.to(device(FLAGS.device))
   kvcache = None
   outputs = llm.generate(**inputs, logits_processor = logits_processor, do_sample = FLAGS.sample, use_cache = True, past_key_values = kvcache, return_dict_in_generate = True) # set return_dict_in_generate to get latest kvcache
   kvcache = outputs.past_key_values
