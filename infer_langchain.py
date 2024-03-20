@@ -4,7 +4,7 @@ import json
 from absl import app, flags
 from langchain.llms import HuggingFaceEndpoint
 from langchain_core.prompts import PromptTemplate
-from lanchain_core.output_parsers import StrOutputParser
+from langchain_core.output_parsers import StrOutputParser
 
 FLAGS = flags.FLAGS
 
