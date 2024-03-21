@@ -8,6 +8,8 @@ from langchain.llms.base import LLM
 from langchain.prompts import PromptTemplate
 
 class ChatGLM3(LLM):
+  tokenizer: AutoTokenizer = None
+  model: AutoModelForCausalLM = None
   def __init__(self, dev = 'cuda', use_history = True):
     assert dev in {'cpu', 'cuda'}
     super().__init__()
