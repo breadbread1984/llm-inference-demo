@@ -61,6 +61,6 @@ def main(unused_argv):
     print(response)
 
 if __name__ == "__main__":
-  add_option()
+  add_options()
   app.run(main)
 
