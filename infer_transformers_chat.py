@@ -4,7 +4,7 @@ import json
 from absl import flags, app
 from huggingface_hub import login
 from torch import device
-from transformers import AutoTokenizer, AutoModelForCausalLM, InvalidScoreLogitsProcessor \
+from transformers import AutoTokenizer, AutoModelForCausalLM, InvalidScoreLogitsProcessor, \
         LogitsProcessorList, TemperatureLogitsWarper, TopKLogitsWarper, TopPLogitsWarper
 
 FLAGS = flags.FLAGS
