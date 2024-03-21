@@ -2,6 +2,7 @@
 
 import json
 from absl import flags, app
+from copy import deepcopy
 from huggingface_hub import login
 from torch import device
 from transformers import AutoTokenizer, AutoModelForCausalLM, \
@@ -52,7 +53,7 @@ def main(unused_argv):
     inputs = inputs.to(device(FLAGS.device))
     eos_token_id = [tokenizer.eos_token_id, tokenizer.get_command("<|user|>"),
                     tokenizer.get_command("<|observation|>")]
-    outputs = self.generate(**inputs, logits_processor = logits_processor, do_sample = True, max_length = 8192, eos_token_id=eos_token_id)
+    outputs = llm.generate(**inputs, logits_processor = logits_processor, do_sample = True, max_length = 8192, eos_token_id=eos_token_id)
     outputs = outputs.tolist()[0][len(inputs["input_ids"][0]):-1]
     response = tokenizer.decode(outputs)
     history.append({'role': 'user', 'content': query})
