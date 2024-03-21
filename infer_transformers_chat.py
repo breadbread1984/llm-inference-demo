@@ -4,7 +4,7 @@ import json
 from absl import flags, app
 from huggingface_hub import login
 from torch import device
-from transformers import AutoTokenizer, AutoModelForCausalLM, InvalidScoreLogitsProcessor, \
+from transformers import AutoTokenizer, AutoModelForCausalLM, \
         LogitsProcessorList, TemperatureLogitsWarper, TopKLogitsWarper, TopPLogitsWarper
 
 FLAGS = flags.FLAGS
@@ -43,7 +43,6 @@ def main(unused_argv):
   llm = llm.to(device(FLAGS.device))
   history = list()
   logits_processor = LogitsProcessorList()
-  logits_processor.append(InvalidScoreLogitsProcessor())
   logits_processor.append(TemperatureLogitsWarper(0.8))
   logits_processor.append(TopPLogitsWarper(0.8))
   print('Ctrl+C to exit...\n')
