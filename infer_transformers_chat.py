@@ -2,6 +2,7 @@
 
 import json
 from absl import flags, app
+from copy import deepcopy
 from huggingface_hub import login
 from torch import device
 from transformers import AutoTokenizer, AutoModelForCausalLM, \
