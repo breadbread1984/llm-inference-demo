@@ -5,6 +5,7 @@ from absl import flags, app
 from torch import device
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from langchain.llms.base import LLM
+from langchain.prompts import PromptTemplate
 
 class ChatGLM3(LLM):
   def __init__(self, dev = 'cuda', use_history = True):
@@ -33,4 +34,14 @@ def add_options():
 
 def main(unused_argv):
   llm = ChatGLM3(FLAGS.device)
+  prompt = PromptTemplate.from_template("{prompt}")
+  chain = prompt | llm
+  while True:
+    query = input('>')
+    output = chain.invoke({"prompt": query})
+    print(outputs)
+
+if __name__ == "__main__":
+  add_options()
+  app.run(main)
 
