@@ -33,7 +33,7 @@ def main(unused_argv):
   history = list()
   while True:
     query = input('>')
-    history.append(ChatMessage.from_str(content = query, MessageRole.USER))
+    history.append(ChatMessage.from_str(content = query, MessageRole.user))
     response = llm.chat(history)
     print(response)
     history.append(ChatMessage.from_str(content = str(response), MessageRole.assistant))
