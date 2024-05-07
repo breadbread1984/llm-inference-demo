@@ -33,10 +33,10 @@ def main(unused_argv):
   history = list()
   while True:
     query = input('>')
-    history.append(ChatMessage.from_str(content = query, role = MessageRole.user))
+    history.append(ChatMessage.from_str(content = query, role = MessageRole.USER))
     response = llm.chat(history)
     print(response)
-    history.append(ChatMessage.from_str(content = str(response), role = MessageRole.assistant))
+    history.append(ChatMessage.from_str(content = str(response), role = MessageRole.ASSISTANT))
     if len(history) > 5: history.pop(0)
 
 if __name__ == "__main__":
