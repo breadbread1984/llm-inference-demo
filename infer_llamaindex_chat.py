@@ -4,7 +4,7 @@ import json
 from absl import flags, app
 from huggingface_hub import login
 from transformers import AutoTokenizer
-from llama_index.core.base.lloms.types import ChatMessage, MessageRole
+from llama_index.core.base.llms.types import ChatMessage, MessageRole
 from llama_index.llms.huggingface import HuggingFaceLLM
 
 FLAGS = flags.FLAGS
