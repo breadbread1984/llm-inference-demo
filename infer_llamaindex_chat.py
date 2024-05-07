@@ -30,14 +30,10 @@ def main(unused_argv):
     messages_to_prompt = messages_to_prompt,
     completion_to_prompt = completion_to_prompt,
     device_map = "auto")
-  history = list()
   while True:
     query = input('>')
-    history.append(ChatMessage.from_str(content = query, role = MessageRole.USER))
-    response = llm.chat(history)
+    response = llm.chat(ChatMessage.from_str(content = query, role = MessageRole.USER))
     print(response)
-    history.append(ChatMessage.from_str(content = str(response), role = MessageRole.ASSISTANT))
-    if len(history) > 5: history.pop(0)
 
 if __name__ == "__main__":
   add_options()
