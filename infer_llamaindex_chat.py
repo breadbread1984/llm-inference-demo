@@ -15,8 +15,8 @@ def add_options():
 def main(unused_argv):
   login('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')
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3-8B-Instruct', trust_remote_code = True)
-  def messages_to_prompt(message):
-    messages = [{'role': message.role, 'content': message.content}]
+  def messages_to_prompt(messages):
+    messages = [{'role': message.role, 'content': message.content} for message in messages]
     prompt = tokenizer.apply_chat_template(messages, tokenize = False, add_generation_prompt = True)
     return prompt
   def completion_to_prompt(completion):
